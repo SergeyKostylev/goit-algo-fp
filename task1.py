@@ -36,7 +36,7 @@ class LinkedList:
 
         print(" -> ".join(list_to_print))
 
-    def sort_recursive(self):
+    def recursive(self):
         if self.head is None:
             return
         cur = self.head
@@ -126,7 +126,7 @@ llist1.print_list()
 print("Raw list 2: ")
 llist2.print_list()
 
-llist1.sort_recursive()
+llist1.recursive()
 print("Recursive list 1: ")
 llist1.print_list()
 llist1.sort_list()
