@@ -3,6 +3,14 @@ class Node:
         self.data = data
         self.next = None
 
+    def __lt__(self, other):
+        return self.data < other.data
+
+    def __gt__(self, other):
+        return self.data > other.data
+
+    def __eq__(self, other):
+        return self.data == other.data
 
 class LinkedList:
     def __init__(self):
@@ -83,15 +91,15 @@ def merge_to_sorted_lists(list1: LinkedList, list2: LinkedList):
         elif el2 is None:
             res.insert_at_end(el1.data)
             el1 = el1.next
-        elif el1.data == el2.data:
+        elif el1 == el2:
             res.insert_at_end(el1.data)
             res.insert_at_end(el2.data)
             el1 = el1.next
             el2 = el2.next
-        elif el1.data < el2.data:
+        elif el1 < el2:
             res.insert_at_end(el1.data)
             el1 = el1.next
-        elif el1.data > el2.data:
+        elif el1 > el2:
             res.insert_at_end(el2.data)
             el2 = el2.next
 
@@ -111,6 +119,7 @@ llist2 = LinkedList()
 llist2.insert_at_end(1000)
 llist2.insert_at_end(101)
 llist2.insert_at_end(100)
+llist2.insert_at_end(1)
 
 print("Raw list 1: ")
 llist1.print_list()
