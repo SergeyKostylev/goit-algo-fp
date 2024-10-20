@@ -8,15 +8,6 @@ class LinkedList:
     def __init__(self):
         self.head = None
 
-    def pop(self):
-        if self.head is None:
-            return None
-
-        data = self.head.data
-        self.head = self.head.next
-
-        return data
-
     def insert_at_end(self, data):
         new_node = Node(data)
         if self.head is None:
@@ -82,27 +73,27 @@ class LinkedList:
 
 def merge_to_sorted_lists(list1: LinkedList, list2: LinkedList):
     res = LinkedList()
-    el1 = list1.pop()
-    el2 = list2.pop()
+    el1 = list1.head
+    el2 = list2.head
 
     while el1 is not None or el2 is not None:
         if el1 is None:
-            res.insert_at_end(el2)
-            el2 = list2.pop()
+            res.insert_at_end(el2.data)
+            el2 = el2.next
         elif el2 is None:
-            res.insert_at_end(el1)
-            el1 = list1.pop()
-        elif el1 == el2:
-            res.insert_at_end(el1)
-            res.insert_at_end(el2)
-            el1 = list1.pop()
-            el2 = list2.pop()
-        elif el1 < el2:
-            res.insert_at_end(el1)
-            el1 = list1.pop()
-        elif el1 > el2:
-            res.insert_at_end(el2)
-            el2 = list1.pop()
+            res.insert_at_end(el1.data)
+            el1 = el1.next
+        elif el1.data == el2.data:
+            res.insert_at_end(el1.data)
+            res.insert_at_end(el2.data)
+            el1 = el1.next
+            el2 = el2.next
+        elif el1.data < el2.data:
+            res.insert_at_end(el1.data)
+            el1 = el1.next
+        elif el1.data > el2.data:
+            res.insert_at_end(el2.data)
+            el2 = el2.next
 
     return res
 
