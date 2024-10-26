@@ -4,13 +4,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 
-def get_node_color(node_deep: int):
-    saturation = 230 if node_deep <= 1 else 255 // node_deep
-    color = (saturation, saturation, saturation)
-
-    return "#{:02x}{:02x}{:02x}".format(color[0], color[1], color[2])
-
-
 class Node:
     def __init__(self, key, color="skyblue"):
         self.left = None
@@ -22,8 +15,7 @@ class Node:
 
 def add_edges(graph, node, pos, x=0, y=0, layer=1):
     if node is not None:
-        color = get_node_color(layer)
-        graph.add_node(node.id, color=color, label=node.val)  # Використання id та збереження значення вузла
+        graph.add_node(node.id, color=node.color, label=node.val)  # Використання id та збереження значення вузла
         if node.left:
             graph.add_edge(node.id, node.left.id)
             l = x - 1 / 2 ** layer
@@ -58,6 +50,42 @@ def draw_tree(tree_root):
     plt.show()
 
 
+def bfs(root):
+    queue = [root]
+    order = []
+    while queue:
+        current = queue.pop(0)
+        order.append(current)
+        if current.left:
+            queue.append(current.left)
+        if current.right:
+            queue.append(current.right)
+    return order
+
+
+def dfs(root):
+    stack = [root]
+    order = []
+    while stack:
+        current = stack.pop()
+        order.append(current)
+        if current.right:
+            stack.append(current.right)
+        if current.left:
+            stack.append(current.left)
+    return order
+
+
+def set_node_colors(nodes):
+    min_val = 10
+    step = (255 - min_val) // len(nodes)
+    saturation = min_val
+
+    for i, node in enumerate(nodes):
+        saturation += step
+        node.color = "#{:02x}{:02x}{:02x}".format(255 - saturation, 255 - saturation, 255 - saturation)
+
+
 # Створення дерева
 root = Node(0)
 root.left = Node(4)
@@ -66,5 +94,12 @@ root.left.right = Node(10)
 root.right = Node(1)
 root.right.left = Node(3)
 
-# Відображення дерева
+# BFS visualization
+bfs_order = bfs(root)
+set_node_colors(bfs_order)
+draw_tree(root)
+
+# DFS visualization
+dfs_order = dfs(root)
+set_node_colors(dfs_order)
 draw_tree(root)
