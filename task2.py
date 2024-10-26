@@ -49,7 +49,7 @@ def pythagoras_tree(t, branch_length, depth):
     t.backward(branch_length)
 
 if __name__ == '__main__':
-    depth = int(sys.argv[1]) if len(sys.argv) > 1 else 3
+    depth = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 
     window = turtle.Screen()
     window.getcanvas().winfo_toplevel().geometry("+0+100")
