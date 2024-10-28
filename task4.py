@@ -42,13 +42,34 @@ def draw_tree(tree_root):
     plt.show()
 
 
-# Створення дерева
-root = Node(0)
-root.left = Node(4)
-root.left.left = Node(5)
-root.left.right = Node(10)
-root.right = Node(1)
-root.right.left = Node(3)
+def insert(heap_root: Node, key):
+    new_node = Node(key)
+    if heap_root is None:
+        return new_node
+    queue = [heap_root]
+    while queue:
+        current = queue.pop(0)
+        if current.left is None:
+            current.left = new_node
+            return heap_root
+        else:
+            queue.append(current.left)
+        if current.right is None:
+            current.right = new_node
+            return heap_root
+        else:
+            queue.append(current.right)
+
+    return heap_root
+
+# Створення бінарної купи
+heap_root = Node(90)  # Корінь максимального купи
+heap_root = insert(heap_root, 20)
+heap_root = insert(heap_root, 19)
+heap_root = insert(heap_root, 18)
+heap_root = insert(heap_root, 17)
+heap_root = insert(heap_root, 16)
+heap_root = insert(heap_root, 15)
 
 # Відображення дерева
-draw_tree(root)
+draw_tree(heap_root)
